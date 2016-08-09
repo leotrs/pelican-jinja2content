@@ -12,8 +12,9 @@ class JinjaMarkdownReader(MarkdownReader):
         super(JinjaMarkdownReader, self).__init__(*args, **kwargs)
 
         # will look first in 'JINJA2CONTENT_TEMPLATES', by default the
-        # content file's parent directory, then in the theme's templates
+        # content root path, then in the theme's templates
         local_templates_dir = self.settings.get('JINJA2CONTENT_TEMPLATES', '.')
+        local_templates_dir = os.path.join(self.settings['PATH'], local_templates_dir)
         theme_templates_dir = os.path.join(self.settings['THEME'], 'templates')
         loader = ChoiceLoader([
             FileSystemLoader(local_templates_dir),
